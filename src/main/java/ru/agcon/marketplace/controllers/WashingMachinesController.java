@@ -33,7 +33,7 @@ public class WashingMachinesController {
 
     @PostMapping("/")
     public WashingMachines createWashingMachine(@RequestBody WashingMachines washingMachine) {
-        washingMachine.setTypeOfProduct("washingMachine");
+        washingMachine.setTypeOfProduct("WM");
         return washingMachinesRepository.save(washingMachine);
     }
 
@@ -46,7 +46,7 @@ public class WashingMachinesController {
             washingMachine.setProducer(washingMachineDetails.getProducer());
             washingMachine.setNumberOfSeller(washingMachineDetails.getNumberOfSeller());
             washingMachine.setTankCapacity(washingMachineDetails.getTankCapacity());
-            washingMachine.setTypeOfProduct(washingMachineDetails.getTypeOfProduct());
+            washingMachine.setTypeOfProduct("WM");
             washingMachine.setPrice(washingMachineDetails.getPrice());
             washingMachine.setName(washingMachineDetails.getName());
             return ResponseEntity.ok(washingMachinesRepository.save(washingMachine));

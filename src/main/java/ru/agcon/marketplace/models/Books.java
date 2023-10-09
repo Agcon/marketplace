@@ -29,7 +29,6 @@ public class Books {
     @Column(name = "name")
     private String name;
 
-    // Конструктор по умолчанию нужен для Spring
     public Books() {
     }
 
