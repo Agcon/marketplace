@@ -9,9 +9,9 @@ services:
       POSTGRES_DB: marketplace
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - db-data:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+
   app:
     build:
       context: .
@@ -24,5 +24,20 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/marketplace
       - SPRING_DATASOURCE_USERNAME=postgres
       - SPRING_DATASOURCE_PASSWORD=admin
-volumes:
-  db-data:
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+  app2:
+    build:
+      context: ./authorization_service
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    depends_on:
+      - redis
+    environment:
+      - REDIS_HOST=localhost
+      - REDIS_PORT=6379
