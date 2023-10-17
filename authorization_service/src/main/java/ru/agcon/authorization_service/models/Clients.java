@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -13,7 +14,10 @@ import java.io.Serializable;
 @RedisHash("clients")
 @Data
 @NoArgsConstructor
+@Component
 public class Clients implements Serializable {
+
+    private static final long serialVersionUID = 1L;
     @NotEmpty(message = "Имя не должно быть пустым")
     private String name;
 

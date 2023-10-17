@@ -1,6 +1,6 @@
 package ru.agcon.authorization_service.security;
 
-/*import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
@@ -33,6 +33,6 @@ public class JWTUtil {
                 .withIssuer("marketplace")
                 .build();
         DecodedJWT jwt = verifier.verify(token);
-        return jwt.getClaim("username").asString();
+        return jwt.getClaim("login").asString();
     }
-}*/
+}
