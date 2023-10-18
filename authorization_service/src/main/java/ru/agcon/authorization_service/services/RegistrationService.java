@@ -3,6 +3,7 @@ package ru.agcon.authorization_service.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.agcon.authorization_service.models.Clients;
 import ru.agcon.authorization_service.repositories.ClientsRepository;
 
@@ -17,9 +18,9 @@ public class RegistrationService {
         this.clientsRepository = clientsRepository;
     }
 
+    @Transactional
     public void create(Clients client){
         client.setPassword(passwordEncoder.encode(client.getPassword()));
-        client.setRole("USER");
         clientsRepository.save(client.getLogin(), client);
     }
 }

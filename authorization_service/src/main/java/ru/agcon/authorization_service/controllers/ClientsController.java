@@ -59,7 +59,6 @@ public class ClientsController {
     }
 
     @GetMapping("/keys")
-    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Set<String>> getKeys(){
         return ResponseEntity.ok(clientsService.getAllKeys());
     }

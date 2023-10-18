@@ -1,4 +1,5 @@
-package ru.agcon.authorization_service.services;
+/*
+package ru.agcon.marketplace.services;
 
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -9,4 +10,4 @@ public class SellerService {
     public void doAdminStuff() {
         System.out.println("Only admin here");
     }
-}
+}*/

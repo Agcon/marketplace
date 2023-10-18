@@ -4,12 +4,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Component;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Collections;
 
 @RedisHash("clients")
 @Data
@@ -37,5 +41,10 @@ public class Clients implements Serializable {
     @NotNull
     @NotEmpty
     private String role;
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        // Возвращаем список ролей в виде объектов GrantedAuthority
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + role));
+    }
 
 }

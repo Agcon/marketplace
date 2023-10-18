@@ -12,7 +12,7 @@ public class RedisConfig {
     @Bean
     public JedisConnectionFactory jedisConnectionFactory() {
         JedisConnectionFactory jedisConnectionFactory = new JedisConnectionFactory();
-        jedisConnectionFactory.setHostName("localhost");
+        jedisConnectionFactory.setHostName("redis");
         jedisConnectionFactory.setPort(6379);
         return jedisConnectionFactory;
     }

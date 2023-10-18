@@ -1,6 +1,8 @@
 package ru.agcon.authorization_service.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,6 +12,7 @@ import ru.agcon.authorization_service.models.Clients;
 import ru.agcon.authorization_service.repositories.ClientsRepository;
 import ru.agcon.authorization_service.security.ClientsDetails;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -50,6 +53,11 @@ public class ClientsService implements UserDetailsService {
         if (client.isEmpty())
             throw new UsernameNotFoundException("User not found");
 
-        return new ClientsDetails(client.get());
+        return new org.springframework.security.core.userdetails.User(
+                client.get().getLogin(),
+                client.get().getPassword(),
+                client.get().getAuthorities()
+        );
     }
+
 }

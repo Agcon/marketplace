@@ -34,8 +34,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http.csrf(csrf->csrf.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("auth/login", "auth/register").permitAll()
-                        .requestMatchers("/auth", "/auth/{login}", "/auth/keys").hasAnyRole("ADMIN")
+                        .requestMatchers( "auth/login", "auth/register").permitAll()
+                        .requestMatchers( "/auth", "/auth/{login}", "/auth/keys").hasRole("ADMIN")
                         .anyRequest().authenticated())
                 .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -49,7 +49,7 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider authenticationProvider=new DaoAuthenticationProvider();
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
         authenticationProvider.setUserDetailsService(clientsService);
         authenticationProvider.setPasswordEncoder(passwordEncoder());
         return authenticationProvider;
