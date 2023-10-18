@@ -3,6 +3,7 @@ package ru.agcon.authorization_service.controllers;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -35,6 +36,7 @@ public class ClientsController {
     }
 
     @GetMapping("")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<ClientsDTO>> getAllClients() {
         List<Clients> clients = clientsService.getAll();
         List<ClientsDTO> clientsDTOS = new ArrayList<>();
@@ -45,6 +47,7 @@ public class ClientsController {
     }
 
     @GetMapping("/{login}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ClientsDTO> getClientByLogin(@PathVariable(value = "login") String clientLogin) {
         Optional<Clients> client = clientsService.findOne(clientLogin);
         if (client.isPresent()) {
@@ -56,6 +59,7 @@ public class ClientsController {
     }
 
     @GetMapping("/keys")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Set<String>> getKeys(){
         return ResponseEntity.ok(clientsService.getAllKeys());
     }
@@ -63,7 +67,7 @@ public class ClientsController {
     @PostMapping("/register")
     public Map<String, String> createClient(@RequestBody ClientsDTO clientsDTO) {
         Clients client = convertToClients(clientsDTO);
-        client.setRole("USER");
+        client.setRole("ADMIN");
         registrationService.create(client);
         String token = jwtUtil.generateToken(client.getLogin());
         return Map.of("jwt-token", token);
@@ -86,6 +90,7 @@ public class ClientsController {
     }
 
     @PutMapping("/{login}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<String> updateClient(@PathVariable(value = "login") String clientLogin,
                                                @RequestBody Clients clientDetails) {
         Optional<Clients> optionalClient = clientsService.findOne(clientLogin);
@@ -104,6 +109,7 @@ public class ClientsController {
     }
 
     @DeleteMapping("/{login}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteClient(@PathVariable(value = "login") String clientLogin) {
         Optional<Clients> optionalClient = clientsService.findOne(clientLogin);
         if (optionalClient.isPresent()) {
