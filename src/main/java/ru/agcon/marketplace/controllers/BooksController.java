@@ -2,6 +2,7 @@ package ru.agcon.marketplace.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.agcon.marketplace.models.Books;
 import ru.agcon.marketplace.repository.BooksRepository;
@@ -31,13 +32,15 @@ public class BooksController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping("/create")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public Books createBook(@RequestBody Books book) {
         book.setTypeOfProduct("Book");
         return booksRepository.save(book);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<Books> updateBook(@PathVariable(value = "id") int bookId,
                                            @RequestBody Books bookDetails) {
         Optional<Books> optionalBook = booksRepository.findById(bookId);
@@ -54,7 +57,8 @@ public class BooksController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN', 'SELLER')")
     public ResponseEntity<Void> deleteBook(@PathVariable(value = "id") int bookId) {
         Optional<Books> optionalBook = booksRepository.findById(bookId);
         if (optionalBook.isPresent()) {

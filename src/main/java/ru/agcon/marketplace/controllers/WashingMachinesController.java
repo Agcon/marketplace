@@ -31,13 +31,13 @@ public class WashingMachinesController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping("/create")
     public WashingMachines createWashingMachine(@RequestBody WashingMachines washingMachine) {
         washingMachine.setTypeOfProduct("WM");
         return washingMachinesRepository.save(washingMachine);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<WashingMachines> updateWashingMachine(@PathVariable(value = "id") int washingMachineId,
                                               @RequestBody WashingMachines washingMachineDetails) {
         Optional<WashingMachines> optionalWashingMachine = washingMachinesRepository.findById(washingMachineId);
@@ -55,7 +55,7 @@ public class WashingMachinesController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteWashingMachine(@PathVariable(value = "id") int washingMachineId) {
         Optional<WashingMachines> optionalWashingMachine = washingMachinesRepository.findById(washingMachineId);
         if (optionalWashingMachine.isPresent()) {

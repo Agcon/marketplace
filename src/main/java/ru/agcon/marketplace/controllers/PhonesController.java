@@ -32,13 +32,13 @@ public class PhonesController {
         }
     }
 
-    @PostMapping("/")
+    @PostMapping("/create")
     public Phones createPhone(@RequestBody Phones phone) {
         phone.setTypeOfProduct("Phone");
         return phonesRepository.save(phone);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Phones> updatePhone(@PathVariable(value = "id") int phoneId,
                                             @RequestBody Phones phoneDetails) {
         Optional<Phones> optionalPhone = phonesRepository.findById(phoneId);
@@ -56,7 +56,7 @@ public class PhonesController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deletePhone(@PathVariable(value = "id") int phoneId) {
         Optional<Phones> optionalPhone = phonesRepository.findById(phoneId);
         if (optionalPhone.isPresent()) {
